@@ -1,0 +1,48 @@
+# AIY 學習
+
+## 安裝組裝
+
+1. 安裝及組裝, 要參考 [build your kit 部分](https://aiyprojects.withgoogle.com/vision/#assembly-guide)
+2. 設定 Raspberry 
+   1. [下載最新的 image](https://github.com/google/aiyprojects-raspbian/releases), 檔案名稱像這樣 aiyprojects-yyyy-mm-yy.img.xz, 大約1.x GB
+   2. 使用 ether 工具把 image flash 到 AIO 的 micro SD 卡, [ether 工具下載](https://www.balena.io/etcher/)
+
+## 與 AIY 連線
+1. 需要 android 手機設定 AIY 的網路
+   1. 在 Andorid Play 裡下載 AIY project APP
+   2. 按照 AIY APP 設定的步驟, 讓AIY可以順利連上 WIFI 並取得 IP
+2. 在電腦裡透過取得的 IP 可以 SSH 到 AIY 的 Raspberry OS
+   1. 連線
+   ```bash
+   > ssh pi@192.168.88.104
+   pi@192.168.88.104 password: raspberry
+   SSH is enabled and the default password for the 'pi' user has not been changed.
+   This is a security risk - please login as the 'pi' user and type 'passwd' to set a new password.
+   pi@raspberrypi:~ $
+   ```
+
+   2. 關機
+   ```bash
+   > sudo poweroff
+   ```
+
+## 測試 Demo, [參考 AIO 網站原文說明](https://aiyprojects.withgoogle.com/vision/#try-more-demos)
+
+1. joy detect (內建預設的功能)
+   可以拿著像機對著人臉, 若有高興的樣子, 按鈕會變色, 若此時按下按鈕, 可以得到照片及高興辨識的分數
+2. 要測試其他功能前, 需將 Joy Detect 關掉, 不然執行其他程式會錯誤
+   ```bash
+   > sudo systemctl stop joy_detection_demo
+   ```
+   
+   stop 只會關這次, 若要下次開機也要預設關閉, 則要下 disable 指令, (enable 則是開機後開啟)
+   ```bash
+   > sudo systemctl disable joy_detection_demo
+   ```
+
+3. image classification camera
+   可以即時偵測照片上的內容
+   ```bash
+   > cd ~/AIY-projects-python/src/examples/vision
+   > ./image_classification_camera.py
+   ``` 
